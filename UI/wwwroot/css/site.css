@@ -69,3 +69,29 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.search-background{
+    background: url('/pictures/backg.jpg');
+}
+
+.backgroundWhite{
+    background-color:white;
+    padding:30px;
+    border-radius:10px;
+    margin-bottom:30px;
+}
+
+.backgroundWhiteBorder {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+}
+
+.backgroundWhite10Padding {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}

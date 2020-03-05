@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body class="search-background">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -24,7 +24,7 @@
                                 Content Management
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                                <a class="dropdown-item">Category</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Categories" asp-action="Index">Category</a>
                                 <a class="dropdown-item">SubCategory</a>
                                 <a class="dropdown-item">MenuItem</a>
                                 <a class="dropdown-item">Coupons</a>
@@ -38,7 +38,7 @@
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Products" asp-action="Index">Products</a>
                         </li>
                     </ul>
                 </div>

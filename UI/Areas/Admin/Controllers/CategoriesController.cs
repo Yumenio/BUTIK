@@ -8,24 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using DataLayer;
 using UI.Data;
 
-namespace UI.Controllers
+namespace UI.Areas.Admin.Controllers
 {
-    public class ProductsController : Controller
+    [Area("Admin")]
+    public class CategoriesController : Controller
     {
         private readonly ButikDbContext _context;
 
-        public ProductsController(ButikDbContext context)
+        public CategoriesController(ButikDbContext context)
         {
             _context = context;
         }
 
-        // GET: Products
+        // GET: Admin/Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
+            return View(await _context.Category.ToListAsync());
         }
 
-        // GET: Products/Details/5
+        // GET: Admin/Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,39 @@ namespace UI.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.ProductID == id);
-            if (product == null)
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryID == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(category);
         }
 
-        // GET: Products/Create
+        // GET: Admin/Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Admin/Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductID,ProductName,Description,Type,Price")] Product product)
+        public async Task<IActionResult> Create([Bind("CategoryID,Name")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(category);
         }
 
-        // GET: Products/Edit/5
+        // GET: Admin/Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +74,22 @@ namespace UI.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var category = await _context.Category.FindAsync(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return View(category);
         }
 
-        // POST: Products/Edit/5
+        // POST: Admin/Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,ProductName,Description,Type,Price")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryID,Name")] Category category)
         {
-            if (id != product.ProductID)
+            if (id != category.CategoryID)
             {
                 return NotFound();
             }
@@ -97,12 +98,12 @@ namespace UI.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ProductID))
+                    if (!CategoryExists(category.CategoryID))
                     {
                         return NotFound();
                     }
@@ -113,10 +114,10 @@ namespace UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(category);
         }
 
-        // GET: Products/Delete/5
+        // GET: Admin/Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +125,30 @@ namespace UI.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.ProductID == id);
-            if (product == null)
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryID == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(category);
         }
 
-        // POST: Products/Delete/5
+        // POST: Admin/Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
+            var category = await _context.Category.FindAsync(id);
+            _context.Category.Remove(category);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.Product.Any(e => e.ProductID == id);
+            return _context.Category.Any(e => e.CategoryID == id);
         }
     }
 }

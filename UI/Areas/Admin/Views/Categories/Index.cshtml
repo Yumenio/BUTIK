@@ -1,0 +1,97 @@
+﻿@*@model IEnumerable<DataLayer.Category>
+
+    @{
+        ViewData["Title"] = "Categorias";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+    </head>
+    <body>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.CategoryID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.CategoryID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.CategoryID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>
+    </html>*@
+
+@model IEnumerable<DataLayer.Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br /><br />
+<div class="border backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info"> Category List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <partial name="_CreateButton" />
+        </div>
+    </div>
+    <br />
+    <div>
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.Name)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td>
+                            <partial name="_TableButtonPartial" model="item.CategoryID" />
+                            @*EDIT | DELETE | DETAILS*@
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>No category exists...</p>
+        }
+    </div>
+</div>
+
+

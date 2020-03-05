@@ -5,9 +5,11 @@ using System.Text;
 
 namespace DataLayer
 {
-    public class ShoppingCart
+    public class Category
     {
         [Key]
-        public int ShoppingCartID { get; set; }
+        public int CategoryID { get; set; }
+        [Required]
+        public string Name { get; set; }
     }
 }

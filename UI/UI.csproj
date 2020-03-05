@@ -5,6 +5,17 @@
     <UserSecretsId>aspnet-UI-493B8FFB-ACFD-4F14-88D8-FD0BA85F6809</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
@@ -23,14 +34,13 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
+    <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+    <Folder Include="Controllers\" />
+    <Folder Include="wwwroot\pictures\" />
   </ItemGroup>
 
 </Project>
