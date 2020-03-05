@@ -28,4 +28,9 @@
     <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+  </ItemGroup>
+
 </Project>

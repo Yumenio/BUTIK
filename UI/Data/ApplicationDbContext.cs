@@ -14,6 +14,7 @@ namespace UI.Data
         {
         }
         public DbSet<DataLayer.Product> Product { get; set; }
+        public DbSet<DataLayer.ShoppingCart> ShoppingCart { get; set; }
     }
     //public class ApplicationDbContext : IdentityDbContext
     //{

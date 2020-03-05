@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Spice.Areas.Identity.Pages.Account
 {
-    public class AccessDeniedModel : PageModel
+    [AllowAnonymous]
+    public class ResetPasswordConfirmationModel : PageModel
     {
         public void OnGet()
         {
@@ -14,4 +16,3 @@ namespace Spice.Areas.Identity.Pages.Account
         }
     }
 }
-
