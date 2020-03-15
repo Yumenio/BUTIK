@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DataLayer.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="border backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">
+                Products List
+            </h2>
+        </div>
+        <div class="col-6 text-right">
+            @* poner despues lo q falta descargando el css 7. create button partial view   *@
+            @*<a asp-action="Create" class="btn btn-info"><i class="fa fa-plus"></i>&nbsp; Create New</a>*@
+            <partial name="_CreateButtonPartial" />
+        </div>
+    </div>
+    <div>
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SubCategoryID)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubCategory.Name)
+                </td>
+                <td>
+                    <partial name="_TableButtonPartial" model="item.ProductID" />
+                </td>
+            </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>No Products exists...</p>
+        }
+    </div>
+</div>

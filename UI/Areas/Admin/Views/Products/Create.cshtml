@@ -1,0 +1,102 @@
+﻿@model DataLayer.Models.ViewModels.ProductViewModel
+@using UI.Extensions
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-info">Create Product</h2>
+<br />
+
+<form method="post" enctype="multipart/form-data">
+    <div class="border backgroundWhite">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Product.Name" class="col-form-label text-dark"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Product.Name" class="form-control" />
+            </div>
+            <span asp-validation-for="Product.Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Product.Description" class="col-form-label text-dark"></label>
+            </div>
+            <div class="col-5">
+                @Html.TextAreaFor(m => m.Product.Description)
+            </div>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Product.Price" class="col-form-label text-dark"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Product.Price" class="form-control" />
+            </div>
+            <span asp-validation-for="Product.Price" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Product.Image" class="col-form-label text-dark"></label>
+            </div>
+            <div class="col-5">
+                <input type="file" name="files" multiple class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Product.CategoryID" class="col-form-label text-dark"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="@Model.Product.CategoryID" id="CategoryID" asp-items="Model.Category.ToSelectItem(Model.Product.CategoryID)" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Product.SubCategoryID" class="col-form-label text-dark"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="@Model.Product.SubCategoryID" name="SubCategoryID" id="SubCategoryID" asp-items="@(new SelectList(string.Empty,"SubCategoryID","Name"))" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <partial name="_CreateAndBacktoListButton" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryID').change(function () {
+                getSubCategory();
+            });
+        });
+
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsource = '#CategoryID';
+            $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryID').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryID').html(items);
+            })
+        }
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
