@@ -1,0 +1,154 @@
+﻿@model DataLayer.Models.ShoppingCart
+@using UI.Extensions
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Edit Announce</h2>
+<br />
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <div class="border backgroundWhite row">
+        <input type="hidden" asp-for="Announce.AnnounceID" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Product.ProductID" class="col-form-label">Product</label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="Announce.Product.ProductID" class="form-control" asp-items="ViewBag.ProductID"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Title" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    @Html.TextAreaFor(m => m.Announce.Title)
+                </div>
+            <span asp-validation-for="Announce.Title" class="text-danger"></span>
+        </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Description" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    @Html.TextAreaFor(m => m.Announce.Description)
+                </div>
+                <span asp-validation-for="Announce.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Price" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Announce.Price" class="form-control" />
+                </div>
+                <span asp-validation-for="Announce.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Amount" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Announce.Amount" class="form-control" />
+                </div>
+                <span asp-validation-for="Announce.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Image" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" name="files" multiple class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="col-3 offset-1">
+            <img src="@Model.Announce.Image" width="100%" style="border-radius:5px;border: 1px solid #bbb9b9;" />
+        </div>
+
+        <div class="col-8">
+            <div class="col-8 offset-4">
+                <partial name="_EditAndBackToListButton" model="Model.Announce.AnnounceID" />
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryID').change(function () {
+                getSubCategory();
+            });
+        });
+
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsource = '#CategoryID';
+            $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryID').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryID').html(items);
+            })
+        }
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@*<h1>Edit</h1>
+
+<h4>Announce</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AnnounceID" />
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductID" class="control-label"></label>
+                <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductID"></select>
+                <span asp-validation-for="ProductID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+

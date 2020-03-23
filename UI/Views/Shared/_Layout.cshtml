@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using UI.Utility
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims;
+@using DataLayer.Models
+@using UI.Data
+
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -24,28 +31,56 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown text-white-50">
-                            <a class="nav-link dropdown-toggle" href = "#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Content Managment
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Menu
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="SubCategory" asp-area="Admin">Sub Category</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Products" asp-area="Admin">Products</a>
+
+                                @if (User.IsInRole(SD.AdminUser))
+                                {
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="SubCategory" asp-area="Admin">Sub Category</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Products" asp-area="Admin">Products</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="User" asp-area="Admin">Users</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="DatesForAndies">dates</a>
+                                }
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Announces" asp-area="Customer">Announce</a>
+
                                 @*<a class="dropdown-item">Category</a>*@
                                 @*<a class="dropdown-item">Category</a>
-        <a class="dropdown-item">Category</a>
-        <a class="dropdown-item">Category</a>*@
+                                    <a class="dropdown-item">Category</a>
+                                    <a class="dropdown-item">Category</a>*@
                             </div>
                         </li>
-                         @*<li>*@
-                            @*<a class="nav-link" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
-                         </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(@SD.ssShoppingCartCount) != null)
+                        {
+                            <li style="color:white">
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(@SD.ssShoppingCartCount);
+                                    }
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (@count)
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li style="color:white">
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (0)
+                                </a>
+                            </li>
+                        }
+
+                        @*<li>*@
+                        @*<a class="nav-link" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
+                            </li>*@
+                        @*<li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>*@
                     </ul>
                 </div>
             </div>

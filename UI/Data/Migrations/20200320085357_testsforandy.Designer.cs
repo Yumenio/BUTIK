@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UI.Data;
 
 namespace UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200320085357_testsforandy")]
+    partial class testsforandy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,77 +69,19 @@ namespace UI.Data.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("DataLayer.Models.OrderDetails", b =>
+            modelBuilder.Entity("DataLayer.Models.DatesForAndy", b =>
                 {
-                    b.Property<int>("OrderDetailsID")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AnnounceID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.HasKey("OrderDetailsID");
-
-                    b.HasIndex("AnnounceID");
-
-                    b.HasIndex("OrderID");
-
-                    b.ToTable("OrderDetails");
-                });
-
-            modelBuilder.Entity("DataLayer.Models.OrderHeader", b =>
-                {
-                    b.Property<int>("OrderHeaderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("OrderTotal")
-                        .HasColumnType("float");
-
-                    b.Property<string>("PaymentStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PickUpName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PickUpTime")
+                    b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("id");
 
-                    b.Property<string>("TransactionID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("OrderHeaderID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("OrderHeader");
+                    b.ToTable("DatesForAndy");
                 });
 
             modelBuilder.Entity("DataLayer.Models.Product", b =>
@@ -164,27 +108,6 @@ namespace UI.Data.Migrations
                     b.HasIndex("SubCategoryID");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("DataLayer.Models.ShoppingCart", b =>
-                {
-                    b.Property<int>("ShoppingCartID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AnnounceID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.HasKey("ShoppingCartID");
-
-                    b.ToTable("ShoppingCart");
                 });
 
             modelBuilder.Entity("DataLayer.Models.SubCategory", b =>
@@ -437,30 +360,6 @@ namespace UI.Data.Migrations
                     b.HasOne("DataLayer.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DataLayer.Models.OrderDetails", b =>
-                {
-                    b.HasOne("DataLayer.Models.Announce", "Announce")
-                        .WithMany()
-                        .HasForeignKey("AnnounceID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataLayer.Models.OrderHeader", "OrderHeader")
-                        .WithMany()
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DataLayer.Models.OrderHeader", b =>
-                {
-                    b.HasOne("DataLayer.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

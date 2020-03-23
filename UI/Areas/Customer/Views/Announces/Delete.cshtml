@@ -1,0 +1,69 @@
+﻿@model DataLayer.Models.ShoppingCart
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Delete Announce</h2>
+<br />
+<form method="post">
+    <div class="backgroundWhiteBorder row">
+        <div class="col-8">
+            <input type="hidden" asp-for="Announce.AnnounceID" />
+            <fieldset disabled>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Announce.Title" class="col-form-label text-dark"></label>
+                    </div>
+                    <div class="col-8">
+                        @Html.TextAreaFor(m => m.Announce.Title)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Announce.ProductID" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Announce.Product.Name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Announce.Description" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        @Html.TextAreaFor(m => m.Announce.Description)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Announce.Price" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Announce.Price" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Announce.Amount" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Announce.Amount" class="form-control" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-3">
+            <img src="@Model.Announce.Image" width="100%" style="border-radius:5px;border:1px solid #bbb9b9;" />
+        </div>
+        <div class="col-8">
+            <div class="col-8 offset-4">
+                <partial name="_DeleteAndBackToListButton" model="Model.Announce.AnnounceID" />
+            </div>
+        </div>
+    </div>
+</form>

@@ -11,10 +11,12 @@ using Microsoft.AspNetCore.Hosting;
 using DataLayer.Models.ViewModels;
 using System.IO;
 using UI.Utility;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.AdminUser)]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -83,34 +85,34 @@ namespace UI.Areas.Admin.Controllers
             _context.Products.Add(ProductVM.Product);
             await _context.SaveChangesAsync();
 
-            //Work on the image saving section
+            ////Work on the image saving section
 
-            string webRootPath = _hostingEnviroment.WebRootPath;
-            var files = HttpContext.Request.Form.Files;
+            //string webRootPath = _hostingEnviroment.WebRootPath;
+            //var files = HttpContext.Request.Form.Files;
 
-            var productFromDb = await _context.Products.FindAsync(ProductVM.Product.ProductID);
+            //var productFromDb = await _context.Products.FindAsync(ProductVM.Product.ProductID);
 
-            if (files.Count > 0)
-            {
-                //files has been uploaded
-                var uploads = Path.Combine(webRootPath, "Images");
-                var extension = Path.GetExtension(files[0].FileName);
+            //if (files.Count > 0)
+            //{
+            //    //files has been uploaded
+            //    var uploads = Path.Combine(webRootPath, "Images");
+            //    var extension = Path.GetExtension(files[0].FileName);
 
-                using (var filesStream = new FileStream(Path.Combine(uploads, ProductVM.Product.ProductID + extension), FileMode.Create))
-                {
-                    files[0].CopyTo(filesStream);
-                }
-                productFromDb.Image = @"\Images\" + ProductVM.Product.ProductID + extension;
-            }
-            else
-            {
-                //no file was uploaded, so use default
-                var uploads = Path.Combine(webRootPath, @"Images\" + SD.DefaultProductImage);
-                System.IO.File.Copy(uploads, webRootPath + @"\Images\" + ProductVM.Product.ProductID + ".png");
-                productFromDb.Image = @"\Images\" + ProductVM.Product.ProductID + ".png";
-            }
+            //    using (var filesStream = new FileStream(Path.Combine(uploads, ProductVM.Product.ProductID + extension), FileMode.Create))
+            //    {
+            //        files[0].CopyTo(filesStream);
+            //    }
+            //    productFromDb.Image = @"\Images\" + ProductVM.Product.ProductID + extension;
+            //}
+            //else
+            //{
+            //    //no file was uploaded, so use default
+            //    var uploads = Path.Combine(webRootPath, @"Images\" + SD.DefaultProductImage);
+            //    System.IO.File.Copy(uploads, webRootPath + @"\Images\" + ProductVM.Product.ProductID + ".png");
+            //    productFromDb.Image = @"\Images\" + ProductVM.Product.ProductID + ".png";
+            //}
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
@@ -147,39 +149,39 @@ namespace UI.Areas.Admin.Controllers
                 return View(ProductVM);
             }
 
-            //_context.Products.Add(ProductVM.Product);
-            //await _context.SaveChangesAsync();
+            _context.Products.Add(ProductVM.Product);
+            await _context.SaveChangesAsync();
 
             //Work on the image saving section
 
-            string webRootPath = _hostingEnviroment.WebRootPath;
-            var files = HttpContext.Request.Form.Files;
+            //string webRootPath = _hostingEnviroment.WebRootPath;
+            //var files = HttpContext.Request.Form.Files;
 
             var productFromDb = await _context.Products.FindAsync(ProductVM.Product.ProductID);
 
-            if (files.Count > 0)
-            {
-                //files has been uploaded
-                var uploads = Path.Combine(webRootPath, "Images");
-                var extension_new = Path.GetExtension(files[0].FileName);
+            //if (files.Count > 0)
+            //{
+            //    //files has been uploaded
+            //    var uploads = Path.Combine(webRootPath, "Images");
+            //    var extension_new = Path.GetExtension(files[0].FileName);
 
-                //Delete the original file
-                var imagePath = Path.Combine(webRootPath, productFromDb.Image.TrimStart('\\'));
+            //    //Delete the original file
+            //    var imagePath = Path.Combine(webRootPath, productFromDb.Image.TrimStart('\\'));
 
-                if (System.IO.File.Exists(imagePath))
-                {
-                    System.IO.File.Delete(imagePath);
-                }
+            //    if (System.IO.File.Exists(imagePath))
+            //    {
+            //        System.IO.File.Delete(imagePath);
+            //    }
 
-                using (var filesStream = new FileStream(Path.Combine(uploads, ProductVM.Product.ProductID + extension_new), FileMode.Create))
-                {
-                    files[0].CopyTo(filesStream);
-                }
-                productFromDb.Image = @"\Images\" + ProductVM.Product.ProductID + extension_new;
-            }
+            //    using (var filesStream = new FileStream(Path.Combine(uploads, ProductVM.Product.ProductID + extension_new), FileMode.Create))
+            //    {
+            //        files[0].CopyTo(filesStream);
+            //    }
+            //    productFromDb.Image = @"\Images\" + ProductVM.Product.ProductID + extension_new;
+            //}
             productFromDb.Name = ProductVM.Product.Name;
-            productFromDb.Price = ProductVM.Product.Price;
-            productFromDb.Description = ProductVM.Product.Description;
+            //productFromDb.Price = ProductVM.Product.Price;
+            //productFromDb.Description = ProductVM.Product.Description;
             productFromDb.CategoryID = ProductVM.Product.CategoryID;
             productFromDb.SubCategoryID = ProductVM.Product.SubCategoryID;
 
@@ -213,17 +215,17 @@ namespace UI.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            string webRootPath = _hostingEnviroment.WebRootPath;
+            //string webRootPath = _hostingEnviroment.WebRootPath;
             Product product = await _context.Products.FindAsync(id);
 
             if (product != null)
             {
-                var imagePath = Path.Combine(webRootPath, product.Image.TrimStart('\\'));
+                //var imagePath = Path.Combine(webRootPath, product.Image.TrimStart('\\'));
 
-                if (System.IO.File.Exists(imagePath))
-                {
-                    System.IO.File.Delete(imagePath);
-                }
+                //if (System.IO.File.Exists(imagePath))
+                //{
+                //    System.IO.File.Delete(imagePath);
+                //}
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
 

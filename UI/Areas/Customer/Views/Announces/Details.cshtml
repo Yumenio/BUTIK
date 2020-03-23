@@ -1,0 +1,70 @@
+﻿@model DataLayer.Models.ShoppingCart
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Details Announce</h2>
+<br />
+<div class="backgroundWhiteBorder row">
+    <div class="col-8">
+        <fieldset disabled>
+            <input asp-for="AnnounceID" hidden />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Title" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <div class="border p-2" >
+                        @Html.Raw(Model.Announce.Title)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Product.Name" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Announce.Product.Name" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Description" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <div class="border p-2">
+                        @Html.Raw(Model.Announce.Description)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Price" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Announce.Price" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Announce.Amount" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Announce.Amount" disabled class="form-control" />
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="col-1"></div>
+    <div class="col-3">
+        <img src="@Model.Announce.Image" width="150" style="border-radius:5px;border:1px solid #bbb9b9;" />
+    </div>
+    <div class="col-8">
+        <div class="col-8 offset-4">
+            <partial name="_addCartDetailsAndBactkToList" model="Model.Announce.AnnounceID" />
+        </div>
+    </div>
+</div>

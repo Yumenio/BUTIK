@@ -14,8 +14,6 @@ namespace DataLayer.Models
         [Required]
         [Display(Name = "Product Name")]
         public string Name { get; set; }
-        public string Description { get; set; }
-        public string Image { get; set; }
 
         [Display(Name = "Category")]
         public int CategoryID { get; set; }
@@ -28,7 +26,5 @@ namespace DataLayer.Models
 
         [Display(Name = "SubCategory")]
         public int SubCategoryID { get; set; }
-        [Range(1, int.MaxValue, ErrorMessage = "Price should be greater than ${1}")]
-        public double Price { get; set; }
     }
 }

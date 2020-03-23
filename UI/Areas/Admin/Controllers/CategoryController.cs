@@ -7,10 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataLayer.Models;
 using UI.Data;
+using Microsoft.AspNetCore.Authorization;
+using UI.Utility;
 
 namespace UI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.AdminUser)]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;

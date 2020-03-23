@@ -16,5 +16,10 @@ namespace UI.Data
         public DbSet<Category> Category { get; set; }
         public DbSet<SubCategory> SubCategory { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Announce> Announce { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
+        public DbSet<OrderHeader> OrderHeader { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
     }
 }

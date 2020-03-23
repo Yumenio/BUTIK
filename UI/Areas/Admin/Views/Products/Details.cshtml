@@ -21,23 +21,6 @@
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Product.Description" class="custom-label"></label>
-                </div>
-                <div class="col-8">
-                    @Html.TextAreaFor(m => m.Product.Description)
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="Product.Price" class="custom-label"></label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="Product.Price" class="form-control" />
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-4">
                     <label asp-for="Product.CategoryID" class="custom-label"></label>
                 </div>
                 <div class="col-8">
@@ -53,10 +36,6 @@
                 </div>
             </div>
         </fieldset>
-    </div>
-    <div class="col-1"></div>
-    <div class="col-3">
-        <img src="@Model.Product.Image" width="100%" style="border-radius:5px;border:1px solid #bbb9b9;" />
     </div>
     <div class="col-8">
         <div class="col-8 offset-4">
