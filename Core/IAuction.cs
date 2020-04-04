@@ -6,5 +6,6 @@ namespace Core
 {
     public interface IAuction
     {
+        public int AuctionID { get; set; }
     }
 }

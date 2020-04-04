@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UI.Data;
 
 namespace UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200323031357_DevAddAuction")]
+    partial class DevAddAuction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,32 +52,6 @@ namespace UI.Data.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("Announce");
-                });
-
-            modelBuilder.Entity("DataLayer.Models.Auction", b =>
-                {
-                    b.Property<int>("AuctionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AnnounceID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Length")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("AuctionID");
-
-                    b.HasIndex("AnnounceID");
-
-                    b.ToTable("Auction");
                 });
 
             modelBuilder.Entity("DataLayer.Models.Category", b =>
@@ -464,15 +440,6 @@ namespace UI.Data.Migrations
                     b.HasOne("DataLayer.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DataLayer.Models.Auction", b =>
-                {
-                    b.HasOne("DataLayer.Models.Announce", "Announce")
-                        .WithMany()
-                        .HasForeignKey("AnnounceID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

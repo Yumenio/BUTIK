@@ -33,17 +33,19 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Title)
                     </th>
-                    @*<th>
+                    <th>
                         @Html.DisplayNameFor(model => model.Product.CategoryID)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Product.SubCategoryID)
-                    </th>*@
+                    </th>
                     <th></th>
                     <th></th>
                 </tr>
                 @foreach (var item in Model)
                 {
+                    if (item.Amount <= 0) //deberian eliminarse de la base de datos, pero weno....
+                        continue;
             <tr>
                 @*<td>
                     @Html.DisplayFor(modelItem => item.Product.Name)
@@ -57,12 +59,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
-                @*<td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Product.Category.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Product.SubCategory.Name)
-                </td>*@
+                </td>
                 <td>
                     <partial name="_TableButtonPartial" model="item.AnnounceID" />
                 </td>

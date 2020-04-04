@@ -56,6 +56,8 @@ namespace UI.Areas.Identity.Pages.Account
             }
 
             return Page();
+
+            return RedirectToAction("Index","User", new { area = "Admin" });
         }
     }
 }

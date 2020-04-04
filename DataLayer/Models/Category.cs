@@ -9,6 +9,8 @@ namespace DataLayer.Models
     {
         [Key]
         public int CategoryID { get; set; }
+
+        [Display(Name = "Category")]
         [Required]
         public string Name { get; set; }
     }

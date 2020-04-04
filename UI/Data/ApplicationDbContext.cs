@@ -21,5 +21,6 @@ namespace UI.Data
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<OrderHeader> OrderHeader { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<DataLayer.Models.Auction> Auction { get; set; }
     }
 }

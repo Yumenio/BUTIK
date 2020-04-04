@@ -1,0 +1,142 @@
+﻿@model IEnumerable<DataLayer.Models.Auction>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="border backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">
+                Auctions List
+            </h2>
+        </div>
+        <div class="col-6 text-right">
+            <partial name="_CreateButtonPartial" />
+        </div>
+    </div>
+    <div>
+        @if (Model.Count() > 0) 
+        {
+            <table class="table table-striped border">
+                <tr>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.Product.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.Announce.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.End)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.Product.SubCategoryID)
+                    </th>*@
+                    <th></th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+            <tr>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Product.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Announce.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Product.SubCategory.Name)
+        </td>*@
+                <td>
+                    <partial name="_BidButtonPartial" model="item.AuctionID" />
+                </td>
+            </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>No Auction exists...</p>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Announce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Announce.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a asp-action="Bid" asp-route-id="@item.AuctionID">Bid</a> |
+                <a asp-action="Edit" asp-route-id="@item.AuctionID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AuctionID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AuctionID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@

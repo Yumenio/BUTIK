@@ -122,6 +122,7 @@ namespace UI.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, SD.CustomerUser);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                     }
+                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
 
                     return RedirectToAction("Index","User", new { area = "Admin" });
                     _logger.LogInformation("User created a new account with password.");

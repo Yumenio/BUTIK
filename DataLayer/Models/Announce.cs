@@ -8,14 +8,23 @@ namespace DataLayer.Models
 {
     public class Announce
     {
+        [Key]
         public int AnnounceID { get; set; }
+        
+        [Required]
         public string Title { get; set; }
+        
         public string Image { get; set; }
+        
         public string Description { get; set; }
+        
         public int Amount { get; set; }
+        
         public int Price { get; set; }
+        
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }
+        
         [Display(Name = "Product")]
         public int ProductID { get; set; }
     }
