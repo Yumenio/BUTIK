@@ -1,0 +1,133 @@
+﻿@model DataLayer.Models.ViewModels.AnnounceViewModel
+@using UI.Extensions
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-info">Create Product</h2>
+<br />
+
+<div class="border backgroundWhite">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Announce.Price" class="col-form-label text-dark"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="Announce.Price" class="form-control" />
+        </div>
+        <span asp-validation-for="Announce.Price" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Announce.Product.CategoryID" class="col-form-label text-dark"></label>
+        </div>
+        <div class="col-5">
+            <select asp-for="@Model.Announce.Product.CategoryID" id="CategoryID" asp-items="Model.Category.ToSelectItem(Model.Announce.Product.CategoryID)" class="form-control"></select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Announce.Product.SubCategoryID" class="col-form-label text-dark"></label>
+        </div>
+        <div class="col-5">
+            <select asp-for="@Model.Announce.Product.SubCategoryID" name="SubCategoryID" id="SubCategoryID" asp-items="Model.SubCategory.ToSelectItem(Model.Announce.Product.SubCategoryID)" class="form-control"></select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Announce.ProductID" class="col-form-label text-dark"></label>
+        </div>
+        <div class="col-5">
+            <select asp-for="@Model.Announce.Product.ProductID" name="ProductID" id="ProductID" asp-items="Model.Product.ToSelectItem(Model.Announce.Product.ProductID)" class="form-control"></select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-5 offset-2">
+            <partial name="_CreateAndBacktoListButton" />
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryID').change(function () {
+                getSubCategory();
+                //getProduct();
+            });
+            //$('#SubCategoryID').change(function () {
+            //    getProduct();
+            //});
+        });
+
+        $(document).ready(function () {
+            getProduct();
+            $('#SubCategoryID').change(function () {
+                getProduct();
+            });
+        });
+
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsource = '#CategoryID';
+            $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryID').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryID').html(items);
+            })
+            //getProduct()
+        }
+
+        function getProduct() {
+            var url = '@Url.Content("~/")' + "Admin/Products/GetProduct";
+            var ddlsource = '#SubCategoryID';
+            $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
+                var items = '';
+                $('#ProductID').empty();
+                $.each(data, function (i, product) {
+                    items += "<option value='" + product.value + "'>" + product.text + "</option>";
+                });
+
+                $('#ProductID').html(items);
+            })
+        }
+
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getProduct();
+            $('#SubCategoryID').change(function () {
+                getProduct();
+            });
+        });
+
+        function getProduct() {
+            var url = '@Url.Content("~/")' + "Admin/Products/GetProduct";
+            var ddlsource = '#SubCategoryID';
+            $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
+                var items = '';
+                $('#ProductID').empty();
+                $.each(data, function (i, product) {
+                    items += "<option value='" + product.value + "'>" + product.text + "</option>";
+                });
+
+                $('#ProductID').html(items);
+            })
+        }
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

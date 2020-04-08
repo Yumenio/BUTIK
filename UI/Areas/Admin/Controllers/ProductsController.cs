@@ -238,5 +238,16 @@ namespace UI.Areas.Admin.Controllers
         {
             return _context.Products.Any(e => e.ProductID == id);
         }
+        
+        [ActionName("GetProduct")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            List<Product> products = new List<Product>();
+            products = await (from product in _context.Products
+                                   where product.SubCategoryID == id
+                                   select product).ToListAsync();
+            var js = Json(new SelectList(products, "ProductID", "Name"));
+            return js;
+        }
     }
 }

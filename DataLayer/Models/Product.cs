@@ -6,7 +6,6 @@ using System.Text;
 
 namespace DataLayer.Models
 {
-    //clase menuitem
     public class Product
     {
         [Key]

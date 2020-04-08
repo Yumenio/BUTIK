@@ -59,7 +59,8 @@ namespace UI.Areas.Admin.Controllers
             subCategories = await (from subCategory in _context.SubCategory
                            where subCategory.CategoryID == id
                            select subCategory).ToListAsync();
-            return Json(new SelectList(subCategories, "SubCategoryID", "Name"));
+            var js = Json(new SelectList(subCategories, "SubCategoryID", "Name"));
+            return js;
         }
         // GET: Admin/SubCategory/Create
         public async Task<IActionResult> Create()

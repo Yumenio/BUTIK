@@ -24,6 +24,7 @@ namespace UI.Areas.Customer.Controllers
         private readonly IHostingEnvironment _hostingEnviroment;
         [BindProperty]
         public ShoppingCart ShopingCart { get; set; }
+        public AnnounceViewModel AnnounceVM { get; set; }
 
         public AnnouncesController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
@@ -32,6 +33,16 @@ namespace UI.Areas.Customer.Controllers
             ShopingCart = new ShoppingCart()
             {
                 Announce = new Announce()
+            };
+            AnnounceVM = new AnnounceViewModel()
+            {
+                Category = _context.Category,
+                SubCategory = _context.SubCategory,
+                Product = _context.Products,
+                Announce = new Announce()
+                {
+                    Product = _context.Products.First()
+                }
             };
         }
 
@@ -52,6 +63,22 @@ namespace UI.Areas.Customer.Controllers
             }
             return View(await listOfAnnounce);
         }
+
+        public async Task<IActionResult> FilteredIndex(int maxPrice, int CategoryID, int SubcategoryID, int ProductID)
+        {
+            var listOfAnnounce = _context.Announce.Include(p => p.Product).ToListAsync();
+            for (int i = 0; i < listOfAnnounce.Result.Count(); i++)
+            {
+                int cid = listOfAnnounce.Result[i].Product.CategoryID;
+                int scid = listOfAnnounce.Result[i].Product.SubCategoryID;
+                var cat = await _context.Category.FindAsync(cid);
+                var scat = await _context.SubCategory.FindAsync(scid);
+                listOfAnnounce.Result[i].Product.Category = cat;
+                listOfAnnounce.Result[i].Product.SubCategory = scat;
+            }
+            return View(await listOfAnnounce);
+        }
+
 
         [Authorize]
         // GET: Customer/Announces/Details/5
@@ -387,5 +414,11 @@ namespace UI.Areas.Customer.Controllers
         {
             return _context.Announce.Any(e => e.AnnounceID == id);
         }
+
+        public async Task<IActionResult> Filter()
+        {
+            return View(AnnounceVM);
+        }
+
     }
 }

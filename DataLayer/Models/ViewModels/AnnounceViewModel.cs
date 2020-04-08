@@ -9,5 +9,6 @@ namespace DataLayer.Models.ViewModels
         public Announce Announce { get; set; }
         public IEnumerable<Category> Category { get; set; }
         public IEnumerable<SubCategory> SubCategory { get; set; }
+        public IEnumerable<Product> Product { get; set; }
     }
 }

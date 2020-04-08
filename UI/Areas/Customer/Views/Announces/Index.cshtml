@@ -1,129 +1,143 @@
 ﻿@model IEnumerable<DataLayer.Models.Announce>
-
+@using UI.Extensions
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="border backgroundWhite">
-    <div class="row">
-        <div class="col-6">
-            <h2 class="text-info">
-                Announce List
-            </h2>
+    <div class="border backgroundWhite">
+        
+        @*@{ 
+            DataLayer.Models.ViewModels.AnnounceViewModel announceVM = new DataLayer.Models.ViewModels.AnnounceViewModel();
+        }
+        <partial name="_Filters" model="announceVM"/>*@
+
+        
+
+        <a class=" btn btn-info text-white" asp-action="Filter" asp-route-ID="Announce">
+            Filter
+        </a>
+
+        <br />
+
+        <div class="row">
+            <div class="col-6">
+                <h2 class="text-info">
+                    Announce List
+                </h2>
+            </div>
+            <div class="col-6 text-right">
+                <partial name="_CreateButtonPartial" />
+            </div>
         </div>
-        <div class="col-6 text-right">
-            <partial name="_CreateButtonPartial" />
+        <div>
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr>
+                        @*<th>
+                            @Html.DisplayNameFor(model => model.Product.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>*@
+                        <th>
+                            @Html.DisplayNameFor(model => model.Price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Product.CategoryID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Product.SubCategoryID)
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        if (item.Amount <= 0) //deberian eliminarse de la base de datos, pero weno....
+                            continue;
+                        <tr>
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.Product.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Category.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.SubCategory.Name)
+                            </td>
+                            <td>
+                                <partial name="_TableButtonPartial" model="item.AnnounceID" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No Products exists...</p>
+            }
         </div>
     </div>
-    <div>
-        @if (Model.Count() > 0)
-        {
-            <table class="table table-striped border">
-                <tr>
-                    @*<th>
-                        @Html.DisplayNameFor(model => model.Product.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Amount)
-                    </th>*@
-                    <th>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Title)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Product.CategoryID)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Product.SubCategoryID)
-                    </th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                @foreach (var item in Model)
-                {
-                    if (item.Amount <= 0) //deberian eliminarse de la base de datos, pero weno....
-                        continue;
-            <tr>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Product.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Category.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.SubCategory.Name)
-                </td>
-                <td>
-                    <partial name="_TableButtonPartial" model="item.AnnounceID" />
-                </td>
-            </tr>
-                }
-            </table>
-        }
-        else
-        {
-            <p>No Products exists...</p>
-        }
-    </div>
-</div>
 
 @*<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Image)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.AnnounceID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.AnnounceID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.AnnounceID">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>*@
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Image)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.AnnounceID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.AnnounceID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.AnnounceID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
