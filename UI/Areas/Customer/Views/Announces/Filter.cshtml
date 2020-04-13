@@ -4,19 +4,31 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{ 
+    int minPrice = 0;
+    int maxPrice = 0;
+}
 <h2 class="text-info">Create Product</h2>
 <br />
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" asp-controller="Announces" asp-action="FilteredIndex" enctype="multipart/form-data">
     <div class="border backgroundWhite">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="Announce.Price" class="col-form-label text-dark"></label>
+                <label asp-for="Announce.Price" class="col-form-label text-dark">Min Price</label>
             </div>
             <div class="col-5">
-                <input asp-for="Announce.Price" class="form-control" />
+                <input asp-for="@minPrice" name="MinPrice" class="form-control" />
+            </div>
+            <span asp-validation-for="Announce.Price" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Announce.Price" class="col-form-label text-dark">Max Price</label>
+            </div>
+            <div class="col-5">
+                <input asp-for="@maxPrice" name="MaxPrice" class="form-control" />
             </div>
             <span asp-validation-for="Announce.Price" class="text-danger"></span>
         </div>
@@ -25,7 +37,7 @@
                 <label asp-for="Announce.Product.CategoryID" class="col-form-label text-dark"></label>
             </div>
             <div class="col-5">
-                <select asp-for="@Model.Announce.Product.CategoryID" id="CategoryID" asp-items="Model.Category.ToSelectItem(Model.Announce.Product.CategoryID)" class="form-control"></select>
+                <select asp-for="@Model.Announce.Product.CategoryID" name="CategoryID" id="CategoryID" asp-items="Model.Category.ToSelectItem(Model.Announce.Product.CategoryID)" class="form-control"></select>
             </div>
         </div>
         <div class="form-group row">
@@ -44,18 +56,16 @@
                 <select asp-for="@Model.Announce.Product.ProductID" name="ProductID" id="ProductID" asp-items="Model.Product.ToSelectItem(Model.Announce.Product.ProductID)" class="form-control"></select>
             </div>
         </div>
-        <div class="form-group row"> 
+        <div class="btn-group" role="group">
+            @*<a class="btn btn-info text-white"  asp-action="FilteredIndex" asp-route-price="@price">
+                Filter
+            </a>*@
             <div class="col-2">
                 <input type="submit" class="btn btn-primary" value="FilteredIndex" />
             </div>
-            <div class="col-6">
+            @*<div class="col-6">
                 <a asp-action="Index" class="btn btn-success">Back to List</a>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-5 offset-2">
-                <partial name="_CreateAndBacktoListButton" />
-            </div>
+            </div>*@
         </div>
     </div>
 </form>

@@ -24,6 +24,7 @@ namespace UI.Areas.Customer.Controllers
         private readonly IHostingEnvironment _hostingEnviroment;
         [BindProperty]
         public ShoppingCart ShopingCart { get; set; }
+        [BindProperty]
         public AnnounceViewModel AnnounceVM { get; set; }
 
         public AnnouncesController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
@@ -41,7 +42,12 @@ namespace UI.Areas.Customer.Controllers
                 Product = _context.Products,
                 Announce = new Announce()
                 {
-                    Product = _context.Products.First()
+                    Product = new Product()
+                    {
+                        CategoryID = 0,
+                        SubCategoryID = 0,
+                        ProductID = 0
+                    }
                 }
             };
         }
@@ -64,19 +70,42 @@ namespace UI.Areas.Customer.Controllers
             return View(await listOfAnnounce);
         }
 
-        public async Task<IActionResult> FilteredIndex(int maxPrice, int CategoryID, int SubcategoryID, int ProductID)
+        public async Task<IActionResult> FilteredIndex(string MinPrice, string MaxPrice, string CategoryID, string SubCategoryID, string ProductID)
         {
-            var listOfAnnounce = _context.Announce.Include(p => p.Product).ToListAsync();
-            for (int i = 0; i < listOfAnnounce.Result.Count(); i++)
+            int minPrice;
+            int maxPrice;
+            int categoryID;
+            int subCategoryID;
+            int productID;
+
+            int.TryParse(MinPrice, out minPrice);
+            int.TryParse(MaxPrice, out maxPrice);
+            int.TryParse(CategoryID, out categoryID);
+            int.TryParse(SubCategoryID, out subCategoryID);
+            int.TryParse(ProductID, out productID);
+
+            minPrice = minPrice < 0 ? 0 : minPrice; //not really necesary
+            maxPrice = maxPrice <= 0 ? int.MaxValue : maxPrice; //this is usefull tho
+
+            var listOfAnnounces = _context.Announce.Include(p => p.Product).ToListAsync();
+            for (int i = 0; i < listOfAnnounces.Result.Count(); i++)
             {
-                int cid = listOfAnnounce.Result[i].Product.CategoryID;
-                int scid = listOfAnnounce.Result[i].Product.SubCategoryID;
+                int cid = listOfAnnounces.Result[i].Product.CategoryID;
+                int scid = listOfAnnounces.Result[i].Product.SubCategoryID;
                 var cat = await _context.Category.FindAsync(cid);
                 var scat = await _context.SubCategory.FindAsync(scid);
-                listOfAnnounce.Result[i].Product.Category = cat;
-                listOfAnnounce.Result[i].Product.SubCategory = scat;
+                listOfAnnounces.Result[i].Product.Category = cat;
+                listOfAnnounces.Result[i].Product.SubCategory = scat;
             }
-            return View(await listOfAnnounce);
+            
+            var filteredList = new List<Announce>();
+
+            foreach (var ann in listOfAnnounces.Result)
+            {
+                if (ann.Price >= minPrice && ann.Price <= maxPrice && ann.Product.CategoryID == categoryID && ann.Product.SubCategoryID == subCategoryID && ann.Product.ProductID == productID)
+                    filteredList.Add(ann);
+            }
+            return View(filteredList);
         }
 
 
